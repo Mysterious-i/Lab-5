@@ -9,17 +9,17 @@ public class Lab4 {
 	public static void main(String[] args) {
 		
 		int buttonChoice;
-		
-		// setup the odometer, display, and ultrasonic and light sensors
-		TwoWheeledRobot patBot = new TwoWheeledRobot(Motor.A, Motor.B);
-		Odometer odo = new Odometer(patBot, true);
-		
-		//Timer LCDTimer = new Timer(100, lcd);
 		UltrasonicSensor us = new UltrasonicSensor(SensorPort.S2);
 		ColorSensor colorSensor = new ColorSensor(SensorPort.S1);
 		
 		Detection detection = new Detection(colorSensor, us);
 		
+		// setup the odometer, display, and ultrasonic and light sensors
+		TwoWheeledRobot patBot = new TwoWheeledRobot(Motor.A, Motor.B);
+		Odometer odometer = new Odometer(patBot, true);
+		
+		Capture capture = new Capture(odometer, detection);
+
 		do {
 			// clear the display
 			LCD.clear();
@@ -33,25 +33,27 @@ public class Lab4 {
 			buttonChoice = Button.waitForAnyPress();
 		} while (buttonChoice != Button.ID_LEFT
 				&& buttonChoice != Button.ID_RIGHT);
-		
 
 		if (buttonChoice == Button.ID_LEFT) {	
 						
-			LCDInfo lcd = new LCDInfo(odo, detection);
+			LCDInfo lcd = new LCDInfo(odometer, detection);
 			
 			//falling edge US localization
 			
-			/*LCD.clear();
-			LCDInfo lcd = new LCDInfo(odo);
-			USLocalizer usl = new USLocalizer (odo, us, USLocalizer.LocalizationType.FALLING_EDGE);
-			usl.doLocalization();*/
+			LCD.clear();
+			//LCDInfo lcd = new LCDInfo(odo);
+			//USLocalizer usl = new USLocalizer (odo, us, USLocalizer.LocalizationType.FALLING_EDGE);
+			//usl.doLocalization();
+			odometer.setPosition(new double [] {0.0, 0.0, 0.0}, new boolean [] {true, true, true});
+			odometer.setAng(0);
+			capture.capture();
 			
 		} 
 		else {
 			
 			//Rising edge US localization
 
-			USLocalizer usl = new USLocalizer (odo, us, USLocalizer.LocalizationType.RISING_EDGE);
+			USLocalizer usl = new USLocalizer (odometer, us, USLocalizer.LocalizationType.RISING_EDGE);
 			usl.doLocalization();
 
 		}

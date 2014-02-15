@@ -20,46 +20,46 @@ public class Detection {
 		 return us.getDistance();
 	 }
 	 
-	String isBlock(){
-		String s = "NOT BLOCK";
+	public boolean isFlagBlock(){
+		boolean isBlock = false;
 		switch(getDistance()){
 		case 0: 
 			if(getColor() > 20){
-				s = "BLOCK";
+				isBlock = true;
 			}
 			break;
 		case 5: 
 			if(getColor() > 20){
-				s = "BLOCK";
+				isBlock = true;
 			}
 			break;
 		case 10: 
 			if(getColor() > 20){
-				s = "BLOCK";
+				isBlock = true;
 			}
 			break;
 		case 15: 
 			if(getColor() > 20){
-				s = "BLOCK";
+				isBlock = true;
 			}
 			break;
 		case 20: 
 			if(getColor() > 20){
-				s = "BLOCK";
+				isBlock = true;
 			}
 			break;
 		case 25: 
 			if(getColor() > 20){
-				s = "BLOCK";
+				isBlock = true;
 			}
 			break;
 		case 30: 
 			if(getColor() > 20){
-				s = "BLOCK";
+				isBlock = true;
 			}
 			break;
 		}
 		
-		return s;
+		return isBlock;
 	}
 }

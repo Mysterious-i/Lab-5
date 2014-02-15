@@ -92,7 +92,7 @@ public class Navigation {
         dY = y - odometer.getY();
                  
         // find the direction by using tan
-        angle = Math.atan2(dX, dY) * 180 / Math.PI;
+        angle = Math.atan2(dY, dX) * 180 / Math.PI;
          
         // Correct the angle until its good
         while (Math.abs(odometer.getAng() - angle) > DEG_ERR && tries < 10) {
