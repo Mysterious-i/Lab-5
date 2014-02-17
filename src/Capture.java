@@ -4,67 +4,141 @@ public class Capture {
 	private Odometer odometer;
 	private Navigation navigation;
 	private Detection detection;
-	public static int i = 0;
-	public static int j = 0;
+	public static int ver= 0;
+	public static int hor = 0;
+	int counter = 0;
+	public boolean oppositeDirection = false;
 	
-	private boolean pastLanes[][] = new boolean[7][3];
 	private boolean movingVerticle;
+	
 	
 	public Capture(Odometer odometer, Detection detection) {
 		this.odometer = odometer;
 		this.navigation = odometer.getNavigation();
 		this.detection = detection;
-		this.movingVerticle = false;
+		this.movingVerticle = true;//at first moving vertically
+		
 	}
 	
 	public void capture(){
 		int blockNumber;
-		int turningAngle = 0;
-			
-		if(detection.getDistance() < 20){
+		
+		if(!movingVerticle){
+			counter++;
+		}
+		else{
+			counter = 0;
+		}
+		
+		if(detection.getDistance() < 30){
 			blockNumber = detection.getBlockNumber();
-			if(blockNumber == 0){
+			
+			if(blockNumber == 2){
 				pushToFinish();
 			}
 			else if(blockNumber == 1){
-				movingVerticle = true;
-				j += 15;
-				turningAngle = 0;
+				
+				if(movingVerticle){	
+					goCorrectSideAroundBlock();
+					if(oppositeDirection){
+						hor -= 10;
+					}
+					else{
+						hor += 10;
+					}
+					movingVerticle = false;
+				}
+				else{
+					ver+=10;
+					movingVerticle = true;
+				}
+				
 			}
 			else{
 				movingVerticle = false;
-				i += 15;
-				turningAngle = 90;
+				if(oppositeDirection){
+					hor -= 10;
+				}
+				else{
+					hor += 10;
+				}
 			}
 		}
 		else{
-			if(movingVerticle){
-				j += 15;
-				turningAngle = 0;
+			if(!movingVerticle && counter < 3){	
+				movingVerticle = false;
+				if(oppositeDirection){
+					hor -= 10;
+				}
+				else{
+					hor += 10;
+				}
 			}
 			else{
-				i += 15;
-				turningAngle = 90;
+				movingVerticle = true;
+				ver += 10;
 			}
 		}
-		navigation.travelTo(i, j);
-		navigation.turnTo(turningAngle, true);
+		navigation.travelTo(ver, hor);
 		
 		capture();
-			
-		/*	if(detection.getDistance() < 150){
-				pastLanes[(int)odometer.getX() % 15][ (int)odometer.getY() % 15] = false;
-			}
-			else{
-				pastLanes[(int)odometer.getX() % 15][ (int)odometer.getY() % 15] = true;
-			}
-				
-		}*/
+	}
+	/*
+	public void capture(){
+		navigation.travelTo(60, 0);
+		capture2();
+	}
+	public void capture2(){
+
+		checkAllSides();
+		checkIfBlockAndType();
+		
+
+	}
+	public void checkAllSides(){
+		navigation.turnTo(270, true);
+		checkIfBlockAndType();
+		navigation.turnTo(0, true);
+		checkIfBlockAndType();
+		navigation.turnTo(90, true);
+		checkIfBlockAndType();
 	}
 	
+
+	public void checkIfBlockAndType(){
+		
+		int blockNumber = 0;		
+		if(detection.getDistance() < 23){
+			blockNumber = detection.getBlockNumber();
+			if(blockNumber == 2){
+				pushToFinish();
+			}
+			else if(blockNumber == 1){
+				goCorrectSideAroundBlock();
+				
+			}
+		}
+		else if (detection.getDistance() < 100){
+			moveUpToBlock();
+		}
+	}
+	public void moveUpToBlock(){
+
+	}
 	public void goToPastLane(){
 	}
-	public void pushToFinish(){
+
+*/
+	public void goCorrectSideAroundBlock(){
 		
+		if(odometer.getY() < 30){
+			oppositeDirection =  false;
+		}
+		else{
+			oppositeDirection = true;
+		}
+	}
+	public void pushToFinish(){
+		navigation.travelTo(190,70);
 	}
 }
