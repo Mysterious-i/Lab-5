@@ -28,22 +28,21 @@ public class LCDInfo implements TimerListener{
 	public void timedOut() { 
 		odo.getPosition(pos);
 		LCD.clear();
-		LCD.drawString("X: ", 0, 4);
+		/*LCD.drawString("X: ", 0, 4);
 		LCD.drawString("Y: ", 0, 5);
 		LCD.drawString("H: ", 0, 6);
 		LCD.drawInt((int)(pos[0] * 10), 3, 4);
 		LCD.drawInt((int)(pos[1] * 10), 3, 5);
 		LCD.drawInt((int)pos[2], 3, 6);
-		
+		*/
 		LCD.drawString("Color: ", 0, 1);
 		LCD.drawString("Distance: ", 0, 2);
-		LCD.drawString("i: ", 0, 3);
-		
+		LCD.drawString("Color #: ", 0, 3);	
 		
 		LCD.drawInt(detection.getColor(), 10, 1);
 		LCD.drawInt(detection.getDistance(), 10, 2);
-		LCD.drawInt(Capture.i, 10, 3);
+		LCD.drawInt(detection.getBlockNumber(), 10, 3);
 		
-		//LCD.drawString(detection.isFlagBlock(), 0, 2);*/
+		LCD.drawString(detection.getBlockType(), 0, 4);
 	}
 }

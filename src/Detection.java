@@ -19,7 +19,7 @@ public class Detection {
 	public int getDistance(){
 		 return us.getDistance();
 	 }
-	 
+	/* 
 	public boolean isFlagBlock(){
 		boolean isBlock = false;
 		switch(getDistance()){
@@ -61,5 +61,31 @@ public class Detection {
 		}
 		
 		return isBlock;
+	}*/
+	
+	public String getBlockType(){
+		String s;
+		if(us.getDistance() < 26){
+			if(getColor() > 26){
+				s = "Blue Block";
+			}
+			else
+				s = "Wall Block";
+		}
+		else
+			s = "No Block";
+		
+		return s;
+	}
+	public int getBlockNumber(){
+		String s;
+		s = getBlockType();
+		if (s.equals("Blue Block")){
+			return 2;
+		}
+		else if (s.equals("Wall Block")){
+			return 1;
+		}
+		return 0;
 	}
 }

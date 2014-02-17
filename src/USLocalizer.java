@@ -153,6 +153,7 @@ public class USLocalizer {
 	 * It has a filter (numberOfReadings to make sure it is recording correct values.
 	 */
 	public void lookUntilNoWall(){
+		numberOfReadings = 0;
 		boolean seeWall = true;
 		while(seeWall){
 			if(getFilteredData() > d + 3*k && numberOfReadings > 10){
@@ -169,6 +170,7 @@ public class USLocalizer {
 	 * It has a filter (numberOfReadings to make sure it is recording correct values.
 	 */
 	public void lookUntilWall(){
+		numberOfReadings = 0;
 		boolean seeWall = false;
 		while(!seeWall){
 			if(getFilteredData() < d + k && numberOfReadings > 10){
