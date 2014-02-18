@@ -39,7 +39,7 @@ public class Lab5 {
 			LCDInfo lcd = new LCDInfo(odometer, detection);
 			
 			//falling edge US localization
-			
+			//blaaa
 			LCD.clear();
 			//LCDInfo lcd = new LCDInfo(odo);
 			
