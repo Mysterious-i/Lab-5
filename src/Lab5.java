@@ -25,10 +25,9 @@ public class Lab5 {
 			LCD.clear();
 
 			// ask the user whether the motors should drive in a square or float
-			LCD.drawString("< Left  |  Right >", 0, 0);
-			LCD.drawString("        |         ", 0, 1);
-			LCD.drawString(" Falling|  Rising ", 0, 2);
-			LCD.drawString(" Edge   |  Edge   ", 0, 3);
+			LCD.drawString("< Left>", 0, 0);
+			LCD.drawString("        ", 0, 1);
+			LCD.drawString(" Start", 0, 2);
  
 			buttonChoice = Button.waitForAnyPress();
 		} while (buttonChoice != Button.ID_LEFT
@@ -37,19 +36,20 @@ public class Lab5 {
 		if (buttonChoice == Button.ID_LEFT) {	
 						
 			LCDInfo lcd = new LCDInfo(odometer, detection);
-			
-			//falling edge US localization
-			//blaaa
+
 			LCD.clear();
-			//LCDInfo lcd = new LCDInfo(odo);
 			
+			//Perform using localization using falling edge and the ultrasonic sensor
 			USLocalizer usl = new USLocalizer (odometer, us, USLocalizer.LocalizationType.FALLING_EDGE);
 			usl.doLocalization();
 			
+			//Switch the mode of the ultrasonic sensor to coninuous because it was in ping mode for the localization
 			us.continuous();
 			
 			odometer.setPosition(new double [] {0.0, 0.0, 0.0}, new boolean [] {true, true, true});
 			odometer.setAng(0);
+			
+			//Try to capture the object, use an exception to exit the recursive stack
 			try{	
 				capture.capture();
 			}
@@ -58,14 +58,6 @@ public class Lab5 {
 			}
 			
 		} 
-		else {
-			
-			//Rising edge US localization
-
-			USLocalizer usl = new USLocalizer (odometer, us, USLocalizer.LocalizationType.RISING_EDGE);
-			usl.doLocalization();
-
-		}
 		
 		while (Button.waitForAnyPress() != Button.ID_ESCAPE);
 		System.exit(0);
