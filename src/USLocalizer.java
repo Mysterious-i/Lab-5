@@ -23,7 +23,7 @@ public class USLocalizer {
 		this.navigation = odo.getNavigation();
 		
 		// switch off the ultrasonic sensor
-		us.off();
+		//us.off();
 	}
 	/*Preforms a certain localization technic depending on whether ther user wants 
 	 * falling edge or rising edge localization.

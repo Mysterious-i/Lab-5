@@ -23,6 +23,13 @@ public class Capture {
 	public void capture(){
 		int blockNumber;
 		
+		if(odometer.getX() > 150){
+			ver = 150;
+			hor = 0;
+			oppositeDirection = false;
+			findBlueBlock();
+		}
+		
 		if(!movingVerticle){
 			counter++;
 		}
@@ -49,7 +56,7 @@ public class Capture {
 					movingVerticle = false;
 				}
 				else{
-					ver+=10;
+					ver += 10;
 					movingVerticle = true;
 				}
 				
@@ -129,9 +136,39 @@ public class Capture {
 	}
 
 */
+	public void findBlueBlock(){
+		
+		navigation.travelTo(ver, hor);
+		
+		if(hor > 59 || hor < 0){
+			ver += 15;
+			if(oppositeDirection){
+				oppositeDirection = false;
+			}
+			else{
+				oppositeDirection = true;
+			}
+		}
+		
+		if(oppositeDirection){
+			hor -= 10;
+		}
+		else{
+			hor += 10;
+		}
+		
+		if(detection.getDistance() < 16){
+			pushToFinish();
+		}
+		
+		else{
+			findBlueBlock();
+		}
+		
+	}
 	public void goCorrectSideAroundBlock(){
 		
-		if(odometer.getY() < 30){
+		if(odometer.getY() < 34){
 			oppositeDirection =  false;
 		}
 		else{
@@ -140,5 +177,6 @@ public class Capture {
 	}
 	public void pushToFinish(){
 		navigation.travelTo(190,70);
+		throw new NullPointerException();
 	}
 }

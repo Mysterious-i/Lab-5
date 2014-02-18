@@ -42,11 +42,20 @@ public class Lab4 {
 			
 			LCD.clear();
 			//LCDInfo lcd = new LCDInfo(odo);
-			//USLocalizer usl = new USLocalizer (odometer, us, USLocalizer.LocalizationType.FALLING_EDGE);
-			//usl.doLocalization();
+			
+			USLocalizer usl = new USLocalizer (odometer, us, USLocalizer.LocalizationType.FALLING_EDGE);
+			usl.doLocalization();
+			
+			us.continuous();
+			
 			odometer.setPosition(new double [] {0.0, 0.0, 0.0}, new boolean [] {true, true, true});
 			odometer.setAng(0);
-			capture.capture();
+			try{	
+				capture.capture();
+			}
+			catch(Exception e){
+				
+			}
 			
 		} 
 		else {
