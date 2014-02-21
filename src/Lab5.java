@@ -50,12 +50,8 @@ public class Lab5 {
 			odometer.setAng(0);
 			
 			//Try to capture the object, use an exception to exit the recursive stack
-			try{	
-				capture.capture();
-			}
-			catch(Exception e){
-				
-			}
+
+			capture.capture();
 			
 		} 
 		
